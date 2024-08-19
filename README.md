@@ -13,9 +13,9 @@ git clone <repository-url>
 Place your ITCH data file into the project directory.
 
 3. Run the VWAP Calculation:
-Navigate to the directory containing the Vwap.py file.
+Navigate to the directory containing the vwap.py file.
 Execute the script using Python:
-python Vwap.py
+python vwap.py
 
-The output will be saved in a file named Vwap_output.txt. The results are sorted hourly.
-To view results for different times, scroll through the Vwap_output.txt file.
+The output will be saved in a file named vwap__output.txt. The results are sorted hourly.
+To view results for different times, scroll through the vwap__output.txt file.
