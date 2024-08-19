@@ -33,14 +33,13 @@ def process_messages(file_path, output_file):
             msg_header = file.read(1)
             if not msg_header:
                 break
-            # print('y')
+         
             if msg_header == b'P':  # Trade message
-                # x=x+1
+              
                 message = file.read(43)  # Length of 'P' message
                 timestamp, symbol, price, volume = parse_trade_message(message)
                 vwap_calculator.add_trade(timestamp, symbol, price, volume)
-                # if x>20000:
-                    # break
+              
         # Calculate VWAP
         vwap_results = vwap_calculator.calculate_vwap()
 
@@ -92,5 +91,4 @@ def convert_timestamp(raw_timestamp):
 
 input_file = '01302019.NASDAQ_ITCH50.gz'
 output_file = 'vwap_output.txt'
-print('x')
 process_messages(input_file, output_file)
