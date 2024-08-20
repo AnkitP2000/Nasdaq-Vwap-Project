@@ -1,3 +1,7 @@
+# Output is under vwap_output.txt, the columns are [ timestamp, company symbol , vwap ]
+# The output company name may have issues because there were non-printable characters in the .gz file. I used a function to c
+# lean the bytes first, which might have removed some characters from the name.
+
 import gzip
 import struct
 from datetime import datetime
@@ -27,13 +31,13 @@ class VWAPCalculator:
 def process_messages(file_path, output_file):
     with gzip.open(file_path, 'rb') as file:
         vwap_calculator = VWAPCalculator()
-        x = 0
         
         while True:
             msg_header = file.read(1)
             if not msg_header:
                 break
-         
+
+            # Checking for 'P' symbol trades as this only is going to impact heavily.
             if msg_header == b'P':  # Trade message
               
                 message = file.read(43)  # Length of 'P' message
@@ -48,23 +52,23 @@ def process_messages(file_path, output_file):
         
         # Save VWAP to file
         with open(output_file, 'w') as f:
-            # f.write(f"{'Timestamp'} {'Symbol'}{'   '}{'VWAP'}\n")
             for result in vwap_results_sorted:
                 f.write(f"{result['timestamp']}{' '} {result['symbol']}{'       '}{result['vwap']:.2f}\n")
 
         print(f"VWAP data saved to {output_file}")
 
+# company symbols were not coming clean, so added this function, this will remove unprintable char from byte
 def clean_and_decode_symbol(byte_string):
-    # Step 1: Filter out non-printable ASCII characters (0x20 to 0x7E)
+    # Filter out non-printable ASCII characters (0x20 to 0x7E)
     printable_bytes = bytes([b for b in byte_string if 0x20 <= b <= 0x7E])
     
-    # Step 2: Remove trailing null bytes and spaces
+    # Remove trailing null bytes and spaces
     cleaned_bytes = printable_bytes.rstrip(b'\x00').rstrip(b' ')
     
-    # Step 3: Remove all spaces from the symbol
+    # Remove all spaces from the symbol
     cleaned_bytes = cleaned_bytes.replace(b' ', b'')
     
-    # Step 4: Decode to Latin-1
+    # Decode to Latin-1
     symbol = cleaned_bytes.decode('latin-1')
     
     return symbol
