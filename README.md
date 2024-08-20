@@ -7,10 +7,10 @@ To calculate the **Volume Weighted Average Price (VWAP)** of each stock for all 
 ```bash
 1. Clone the Repository:
 Clone the repository to your local machine using the following command:
-git clone <repository-url>
+git clone https://github.com/AnkitP2000/Nasdaq-Vwap-Project.git
 
 2. Add the ITCH File:
-Place your ITCH data file into the project directory.
+Place your ITCH data file into the project directory and pass the name of the itch file in input file variable present in the vwap.py
 
 3. Run the VWAP Calculation:
 Navigate to the directory containing the vwap.py file.
