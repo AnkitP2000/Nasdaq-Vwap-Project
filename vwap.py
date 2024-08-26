@@ -1,7 +1,3 @@
-# Output is under vwap_output.txt, the columns are [ timestamp, company symbol , vwap ]
-# The output company name may have issues because there were non-printable characters in the .gz file. I used a function to c
-# lean the bytes first, which might have removed some characters from the name.
-
 import gzip
 import struct
 from datetime import datetime
